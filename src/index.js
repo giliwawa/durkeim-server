@@ -44,8 +44,12 @@ app.use(middleware({ config, db }));
 
 // api router
 app.use('/api', api({ config, db, app}));
-
-app.server.listen(process.env.PORT || config.port);
+if(process.env.DB === 'remote'){
+	app.server.listen(3000);
+}
+else {
+	app.server.listen(process.env.PORT || config.port);
+}
 
 
 console.log(`Started on port ${app.server.address().port}`);
