@@ -24,7 +24,7 @@ export default ({ config, db, app}) => {
 
 	// perhaps expose some API metadata at the root
 	api.get('/', (req, res) => {
-		res.json({ version });
+		res.json({ "version" : "1.0.0" });
 	});
 
 	return api;
