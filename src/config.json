@@ -2,6 +2,7 @@
 	"port": 8080,
 	"bodyLimit": "100kb",
 	"corsHeaders": ["Link"],
+	"jwtSecret" : "FathelyaZabbourDezzou9atta3louElKharkhour",
 	"pusherIDS":{
 	  "appId": "316876",
 	  "key": "40d14531e21ae7d1c241",

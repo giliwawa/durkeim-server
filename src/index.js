@@ -15,7 +15,7 @@ import config from './config.json';
 
 
 let app = express();
-app.set('jwtTokenSecret', 'FathelyaZabbourDezzou9atta3louElKharkhour')
+app.set('jwtTokenSecret', config.jswtSecret);
 app.server = http.createServer(app);
 
 // logger
