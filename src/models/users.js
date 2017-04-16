@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt-nodejs';
 
 const {Schema} = mongoose;
 
+
 mongoose.Promise = global.Promise
 
 const userSchema = new Schema({
