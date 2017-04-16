@@ -1,0 +1,15 @@
+{
+	"port": 8080,
+	"bodyLimit": "100kb",
+	"corsHeaders": ["Link"],
+	"pusherIDS":{
+	  "appId": "316876",
+	  "key": "40d14531e21ae7d1c241",
+	  "secret": "e9f8c071c2bfef7f96f3",
+	  "cluster": "eu",
+	  "encrypted": true
+	},
+	"clearbit":{
+		"key" : "sk_5dcd1d33158e93b676e88e185850cdc8"
+	}
+}
