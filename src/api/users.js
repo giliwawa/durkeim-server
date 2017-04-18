@@ -1,8 +1,9 @@
 import Validator from '../validators/user';
 import util from 'util';
 import resource from 'resource-router-middleware';
+import generateJwt from '../lib/generateJwt'
 
-export default ({ config, db }) => {
+export default ({ config, db, app}) => {
 	let router = resource({
 
 		/** Property name to store preloaded entity on `request`. */
@@ -53,7 +54,12 @@ export default ({ config, db }) => {
 				user.password = user.generateHash(user.password);
 				user.save((err) => {
 					if (err) throw err;
-					res.json(user);
+					res.json({
+						token : generateHash(app, user._id),
+						user_info : user.user_info,
+						interests : user.interests || [],
+						general_info : user.general_info,
+					});
 				})
 
 			})

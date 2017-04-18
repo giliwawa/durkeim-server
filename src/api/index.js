@@ -16,7 +16,7 @@ export default ({ config, db, app}) => {
 	// mount the facets resource
 	api.use('/auth', auth({config, db, app}))
 	api.use('/facets', facets({ config, db }));
-	api.use('/users', users({ config, db }));
+	api.use('/users', users({ config, db, app }));
 	api.use('/signals', signals({ config, db }));
 
 	//Add api end points here
