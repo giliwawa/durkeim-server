@@ -14,34 +14,37 @@ export default ({config, db, app}) => {
 
 
   router.post('/login', (req,res,next)=>{
+
     req.checkBody(validator.loginValidator);
     req.getValidationResult().then((result) => {
       if(!result.isEmpty()){
         res.status(400).json(result.array());
         return;
       }
-      User.findOne({ email: req.body.email }, function(err, user) {
+      User.findOne({ "user_info.email": req.body.email }, function(err, user) {
         if (err) {
           // user not found
           return res.status(401).json({error: 'user not found'});
         }
 
         if (!user) {
-          // incorrect username
+          console.error("NO USER FOUND");
           return res.status(401).json({error: 'Invalid username or password'});
         }
 
         if (!user.validPassword(req.body.password)) {
           // incorrect password
+          console.error("INVALID PASSWORD");
           return res.status(401).json({error: 'Invalid username or password'});
         }
 
         // User has authenticated OK
 
-        const token = generateJwt(app, user._id);
         res.status(200).json({
-          token: token,
-          user : user,
+          token : generateJwt(app, user._id),
+          user_info : user.user_info,
+          interests : user.interests || [],
+          general_info : user.general_info,
         });
         // const expires = moment().add(2,'days').valueOf();
         // const token = jwt.encode({
