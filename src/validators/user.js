@@ -23,11 +23,10 @@ const entityValidator = {
 }
 const loginValidator = {
 
-  'email': {
-    notEmpty: true,
-    isEmail:{
-      errorMessage: "you must provide an email"
-    }
+'email': {
+  notEmpty: true,
+  isEmail:{
+    errorMessage: "you must provide an email"
   }
 },
 'password':{
