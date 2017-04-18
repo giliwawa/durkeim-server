@@ -22,12 +22,12 @@ const userSchema = new Schema({
   },
   "interests"   : [{type: Schema.ObjectId, ref: "tags"}],
   "general_info":{
-    "education" : [Object],
-    "experience": [Object]
+    "education" : [Schema.Types.Object],
+    "experience": [Schema.Types.Object]
   },
   "password"  : String,
-  "contacts"  : [{type : Schema.ObjectId, ref: "users"}],
   "created_at": {
+    "contacts"  : [{type : Schema.ObjectId, ref: "users"}],
     type : Date,
     default : Date.now
   },
