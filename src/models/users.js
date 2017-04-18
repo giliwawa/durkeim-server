@@ -7,14 +7,26 @@ const {Schema} = mongoose;
 mongoose.Promise = global.Promise
 
 const userSchema = new Schema({
-  "email" : {
-    type:String,
-    index: true
+  "user_info":{
+    "email" : {
+      type:String,
+      index: true
+    },
+    "first_name": String,
+    "last_name" : String,
+    "occupation": String,
+    "company"   : String,
+    "bio"       : String,
+    "social"    : [Object],
+    "profile_img": [Object]
   },
-  "first_name": String,
-  "last_name" : String,
+  "interests"   : [{type: Schema.ObjectId, ref: "tags"}],
+  "general_info":{
+    "education" : [Object],
+    "experience": [Object]
+  },
   "password"  : String,
-  "friends"   : [{type : Schema.ObjectId, ref: "users"}],
+  "contacts"  : [{type : Schema.ObjectId, ref: "users"}],
   "created_at": {
     type : Date,
     default : Date.now

@@ -3,12 +3,16 @@ import jwt from 'jwt-simple';
 import moment from 'moment';
 import clearbit from 'clearbit';
 import validator from '../validators/user';
-import util from 'util';
+import generateJwt from '../lib/generateJwt'
+import {userTransformer} from '../lib/enrichementToUser'
 
 let router = Router();
 
 export default ({config, db, app}) => {
+
   let User = db.model('users');
+
+
   router.post('/login', (req,res,next)=>{
     req.checkBody(validator.loginValidator);
     req.getValidationResult().then((result) => {
@@ -33,16 +37,22 @@ export default ({config, db, app}) => {
         }
 
         // User has authenticated OK
-        const expires = moment().add(2,'days').valueOf();
-        const token = jwt.encode({
-          iss: user._id,
-          exp: expires
-        },app.get('jwtTokenSecret'));
-        res.json({
+
+        const token = generateJwt(app, user._id);
+        res.status(200).json({
           token: token,
-          expires: expires,
-          user: user.toJSON()
+          user : user,
         });
+        // const expires = moment().add(2,'days').valueOf();
+        // const token = jwt.encode({
+        //   iss: user._id,
+        //   exp: expires
+        // },app.get('jwtTokenSecret'));
+        // res.json({
+        //   token: token,
+        //   expires: expires,
+        //   user: user.toJSON()
+        // });
       });
 
     })
@@ -58,7 +68,7 @@ export default ({config, db, app}) => {
   router.get("/enrichment", (req, res, next)=>{
     let cb = clearbit(config.clearbit.key);
     cb.Enrichment.find({email: req.query.email}).then((data) => {
-      res.json(data);
+      res.status(200).json(userTransformer(data));
     }).catch(cb.Enrichment.QueuedError, (err) => console.error(err))
     .catch((err) => console.error(err));
   });
