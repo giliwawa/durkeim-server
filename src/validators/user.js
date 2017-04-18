@@ -1,17 +1,16 @@
 const entityValidator = {
-  "user_info" : {
-    'email': {
-      notEmpty: true,
-      isEmail:{
-        errorMessage: "you must provide an email"
-      }
-    },
-    'first_name':{
-      notEmpty: true,
-    },
-    'last_name':{
-      notEmpty: true,
+
+  'user_info.email': {
+    notEmpty: true,
+    isEmail:{
+      errorMessage: "you must provide an email"
     }
+  },
+  'user_info.first_name':{
+    notEmpty: true,
+  },
+  'user_info.last_name':{
+    notEmpty: true,
   },
   'password':{
     notEmpty: true,

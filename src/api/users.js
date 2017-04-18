@@ -37,7 +37,9 @@ export default ({ config, db }) => {
 		create(req, res) {
 			let User = db.model('users');
 			//Validate request body
-
+			// console.log(req.body);
+			// console.log("###################################");
+			// console.log(Validator.entityValidator);
 			req.checkBody(Validator.entityValidator);
 
 			req.getValidationResult().then((result) => {
