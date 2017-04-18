@@ -55,7 +55,7 @@ export default ({ config, db, app}) => {
 				user.save((err) => {
 					if (err) throw err;
 					res.json({
-						token : generateHash(app, user._id),
+						token : generateJwt(app, user._id),
 						user_info : user.user_info,
 						interests : user.interests || [],
 						general_info : user.general_info,
