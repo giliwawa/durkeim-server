@@ -65,7 +65,7 @@ export default ({config, db, app}) => {
   // returns information
   // TODO Handle QueuedError and no data found.
 
-  router.get("/enrichement", (req, res, next)=>{
+  router.get("/enrichment", (req, res, next)=>{
     let cb = clearbit(config.clearbit.key);
     console.log(userTransformer);
     cb.Enrichment.find({email: 'alex@alexmaccaw.com'}).then((data) => {
