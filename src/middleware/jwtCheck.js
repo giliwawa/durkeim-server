@@ -10,7 +10,8 @@ export default ({db, app}) => {
   return (req, res, next) => {
     console.log(req.path,'::',req.method);
 
-    if(req.path === "/auth/login" || (req.path ===  "/users")&&(req.method ==="POST") ) next();
+    if(req.path === "/auth/login" || (req.path ===  "/users")&&(req.method ==="POST")
+    || req.path === "/auth/enrichement") next();
 
     else{
       const token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
