@@ -4,7 +4,7 @@ import moment from 'moment';
 import clearbit from 'clearbit';
 import validator from '../validators/user';
 import generateJwt from '../lib/generateJwt'
-import {userTransformer} from '../lib/enrichementToUser'
+import userTransformer from '../lib/enrichementToUser'
 
 let router = Router();
 
@@ -65,12 +65,14 @@ export default ({config, db, app}) => {
   // returns information
   // TODO Handle QueuedError and no data found.
 
-  router.get("/enrichment", (req, res, next)=>{
+  router.get("/enrichement", (req, res, next)=>{
     let cb = clearbit(config.clearbit.key);
-    cb.Enrichment.find({email: req.query.email}).then((data) => {
+    console.log(userTransformer);
+    cb.Enrichment.find({email: 'alex@alexmaccaw.com'}).then((data) => {
       res.status(200).json(userTransformer(data));
-    }).catch(cb.Enrichment.QueuedError, (err) => console.error(err))
-    .catch((err) => console.error(err));
+    })
+    .catch(cb.Enrichment.QueuedError, (err) => res.json({error :'QueuedError'}))
+    .catch((err) => res.json({error : 'No data found'}));
   });
 
 

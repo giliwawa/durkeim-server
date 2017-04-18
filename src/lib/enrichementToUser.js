@@ -1,5 +1,6 @@
  let userTransformer = (enrichement) => {
   let user = {};
+  console.log(enrichement);
   user.user_info = {
     email : enrichement.person.email,
     first_name: enrichement.person.name.givenName,
@@ -22,6 +23,4 @@
 }
 
 
-export default {
-  userTransformer
-}
+export default userTransformer
