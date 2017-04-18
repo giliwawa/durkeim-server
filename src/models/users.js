@@ -17,8 +17,8 @@ const userSchema = new Schema({
     "occupation": String,
     "company"   : String,
     "bio"       : String,
-    "social"    : [Object],
-    "profile_img": [Object]
+    "social"    : [Schema.Types.Object],
+    "profile_img": String
   },
   "interests"   : [{type: Schema.ObjectId, ref: "tags"}],
   "general_info":{
