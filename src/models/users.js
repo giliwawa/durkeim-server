@@ -10,12 +10,16 @@ const userSchema = new Schema({
   "user_info":{
     "email" : {
       type:String,
-      index: true
+      index: true,
+      unique: true,
+      dropDups: true
     },
     "first_name": String,
     "last_name" : String,
-    "occupation": String,
-    "company"   : String,
+    "company"   : {
+      "company_id" : {type: Schema.ObjectId, ref: "companies"},
+      "position"   : String
+    },
     "bio"       : String,
     "social"    : [Schema.Types.Object],
     "profile_img": String

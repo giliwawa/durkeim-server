@@ -46,16 +46,7 @@ export default ({config, db, app}) => {
           interests : user.interests || [],
           general_info : user.general_info,
         });
-        // const expires = moment().add(2,'days').valueOf();
-        // const token = jwt.encode({
-        //   iss: user._id,
-        //   exp: expires
-        // },app.get('jwtTokenSecret'));
-        // res.json({
-        //   token: token,
-        //   expires: expires,
-        //   user: user.toJSON()
-        // });
+
       });
 
     })
@@ -66,7 +57,6 @@ export default ({config, db, app}) => {
   //Enrichment
   // Get request to /enrichment/person?email=[email]
   // returns information
-  // TODO Handle QueuedError and no data found.
 
   router.get("/enrichment", (req, res, next)=>{
     let cb = clearbit(config.clearbit.key);

@@ -38,18 +38,18 @@ app.use(expressValidator());
 // connect to db
 initializeDb( db => {
 
-// internal middleware
+	// internal middleware
+	
+	app.use(middleware({ config, db }));
 
-app.use(middleware({ config, db }));
+	// api router
+	app.use('/api', api({ config, db, app}));
 
-// api router
-app.use('/api', api({ config, db, app}));
-
-app.server.listen(process.env.PORT || config.port);
+	app.server.listen(process.env.PORT || config.port);
 
 
 
-console.log(`Started on port ${app.server.address().port}`);
+	console.log(`Started on port ${app.server.address().port}`);
 });
 
 export default app;

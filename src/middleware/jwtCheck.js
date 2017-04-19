@@ -8,7 +8,6 @@ export default ({db, app}) => {
   let User = db.model('users');
 
   return (req, res, next) => {
-    console.log(req.path,'::',req.method);
 
     if(req.path === "/auth/login" || (req.path ===  "/users")&&(req.method ==="POST")
     || req.path === "/auth/enrichment") next();

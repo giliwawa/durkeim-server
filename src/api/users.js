@@ -33,14 +33,15 @@ export default ({ config, db, app}) => {
 		},
 
 
-		/** POST / - Create a new entity */
-		// TODO: log user in after signup
+		/**
+		* Creates a new user
+		* @param  {request} req Express Request Object
+		* @param  {Response} res Express Response Object
+		*/
 		create(req, res) {
 			let User = db.model('users');
+
 			//Validate request body
-			// console.log(req.body);
-			// console.log("###################################");
-			// console.log(Validator.entityValidator);
 			req.checkBody(Validator.entityValidator);
 
 			req.getValidationResult().then((result) => {
@@ -53,7 +54,10 @@ export default ({ config, db, app}) => {
 				let user = new User(req.body);
 				user.password = user.generateHash(user.password);
 				user.save((err) => {
-					if (err) throw err;
+					if (err) {
+						console.log(err);
+						res.send(500);
+					}
 					res.json({
 						token : generateJwt(app, user._id),
 						user_info : user.user_info,
@@ -66,13 +70,23 @@ export default ({ config, db, app}) => {
 
 		},
 
-		/** GET /:id - Return a given entity */
+
+		/**
+		* GET /users/:id Get user by id
+		* @param  {User} users user matching the :id
+		* @param  {Response} res   Express Response Object
+		*/
 		read({ users }, res) {
 
 			res.json(users);
 		},
 
-		/** PUT /:id - Update a given entity */
+		/**
+		* PUT /users/:id Updates the user by the given :id
+		* @param  {User} user User model
+		* @param  {Object} body Request body
+		* @param  {Response} res  Response Object
+		*/
 		update({ user, body }, res) {
 			for (let key in body) {
 				if (key!=='id') {
@@ -92,67 +106,36 @@ export default ({ config, db, app}) => {
 				if(err) throw err;
 				res.sendStatus(204);
 			});
+
+		},
+
+		"custom":{
+			/**
+			* Register all custom get routes
+			* @type {Object}
+			*/
+			get : {
+
+				/**
+				* GET /users/me get the current user profile
+				* @param  {Request} req Express Request Object
+				* @param  {Response} res Express Response Object
+				*/
+				me(req,res){
+					res.status(200).json({
+						user_info 		: req.user.user_info,
+						general_info 	: req.user.general_info,
+						interests			: req.user.interests
+					})
+				},
+
+
+			},
 		}
-	});
 
-	return router;
-}
+		});
 
 
 
-// resource({
-//
-// 	/** Property name to store preloaded entity on `request`. */
-// 	id : 'users',
-//
-// 	/** For requests with an `id`, you can auto-load the entity.
-// 	 *  Errors terminate the request, success sets `req[id] = data`.
-// 	 */
-// 	load(req, id, callback) {
-// 		let user = db.model('users').find( {"_id" : id}).then((user) =>{
-// 			callback(null, user);
-// 		},(err) => {
-// 			callback(err, null);
-// 		} )
-//
-// 	},
-//
-// 	/** GET / - List all entities */
-// 	index({ params }, res) {
-//     let users = db.model('users').find({}).then((data) => res.json(data),(err) => console.error(err))
-// 	},
-//
-// 	/** POST / - Create a new entity */
-// 	create({body}, res) {
-// 		let User = db.model('users');
-// 		let user = new User(body);
-// 		user.password = user.generateHash(user.password);
-// 		user.save((err) => {
-// 			if (err) throw err;
-// 			res.json(user);
-// 		})
-// 	},
-//
-// 	/** GET /:id - Return a given entity */
-// 	read({ users }, res) {
-// 		console.log('user: ', users);
-// 		res.json(users);
-// 	},
-//
-// 	/** PUT /:id - Update a given entity */
-// 	update({ user, body }, res) {
-// 		for (let key in body) {
-// 			if (key!=='id') {
-// 				user[key] = body[key];
-// 			}
-// 		}
-//
-// 		res.json({"user": user, "body" : body});
-// 	},
-//
-// 	/** DELETE /:id - Delete a given entity */
-// 	delete({ user }, res) {
-// 		users.splice(users.indexOf(user), 1);
-// 		res.sendStatus(204);
-// 	}
-// });
+		return router;
+	}
