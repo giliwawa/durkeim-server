@@ -109,29 +109,7 @@ export default ({ config, db, app}) => {
 
 		},
 
-		"custom":{
-			/**
-			* Register all custom get routes
-			* @type {Object}
-			*/
-			get : {
-
-				/**
-				* GET /users/me get the current user profile
-				* @param  {Request} req Express Request Object
-				* @param  {Response} res Express Response Object
-				*/
-				me(req,res){
-					res.status(200).json({
-						user_info 		: req.user.user_info,
-						general_info 	: req.user.general_info,
-						interests			: req.user.interests
-					})
-				},
-
-
-			},
-		}
+		
 
 		});
 

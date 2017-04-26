@@ -7,16 +7,16 @@ mongoose.Promise = global.Promise
 
 const signalSchema = new Schema({
 
-  "Title": String,
-  "body" : String,
+  "Title"           : String,
+  "body"            : String,
   "matched_users"   : [{type : Schema.ObjectId, ref: "users"}],
-  "tags" : [{type: Schema.ObjectId, ref: "tags"}],
-  "owner" : {type: Schema.ObjectId, ref: "users"},
-  "created_at": {
+  "tags"            : [{type: Schema.ObjectId, ref: "tags"}],
+  "owner_id"        : {type: Schema.ObjectId, ref: "users"},
+  "created_at"      : {
     type : Date,
     default : Date.now
   },
-  "isDeleted" : {
+  "isDeleted"       : {
     type: Boolean,
     default : false
   }

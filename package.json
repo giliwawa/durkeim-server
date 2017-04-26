@@ -9,7 +9,7 @@
     "start": "node dist",
     "prestart": "npm run -s build",
     "testt": "eslint src",
-    "test": "NODE_ENV=test nyc --require babel-core/register mocha ./src/test"
+    "test": "NODE_ENV=test nyc --require babel-core/register mocha ./src/test --timeout=10000"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",

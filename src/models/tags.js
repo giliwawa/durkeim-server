@@ -8,6 +8,7 @@ mongoose.Promise = global.Promise
 const tagSchema = new Schema({
 
   "value" : String,
+  "type"  : String,
   "created_at": {
     type : Date,
     default : Date.now

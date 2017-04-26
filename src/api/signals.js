@@ -28,9 +28,15 @@ export default ({ config, db }) => {
 		create({body}, res) {
 			let Signal = db.model('signals');
 			let signal = new Signal(body);
+
+			// TODO: Add validation
+
 			signal.save((err) => {
-				if (err) throw err;
-				res.json(signal);
+				if (err) {
+					console.log(err);
+					re.status(500).end()
+				}
+				res.status(201).end();
 			})
 		},
 
