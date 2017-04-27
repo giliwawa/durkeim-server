@@ -19,10 +19,11 @@ app.set('jwtTokenSecret', config.jwtSecret);
 app.server = http.createServer(app);
 
 // logger
-if(process.env.NODE_ENV !=='test'){
-	app.use(morgan('dev'));
-	console.log('not in dev env: ',process.env.NODE_ENV)
-}
+// if(process.env.NODE_ENV !=='test'){
+// 	app.use(morgan('dev'));
+// 	console.log('not in dev env: ',process.env.NODE_ENV)
+// }
+app.use(morgan('dev'));
 
 // 3rd party middleware
 app.use(cors({
@@ -39,7 +40,7 @@ app.use(expressValidator());
 initializeDb( db => {
 
 	// internal middleware
-	
+
 	app.use(middleware({ config, db }));
 
 	// api router

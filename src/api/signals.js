@@ -11,8 +11,8 @@ export default ({ config, db }) => {
 		id : 'signals',
 
 		/** For requests with an `id`, you can auto-load the entity.
-		 *  Errors terminate the request, success sets `req[id] = data`.
-		 */
+		*  Errors terminate the request, success sets `req[id] = data`.
+		*/
 		load(req, id, callback) {
 			let signal = db.model('signals').find( {"_id" : id}).then((signal) =>{
 				callback(null, signal);
@@ -35,25 +35,23 @@ export default ({ config, db }) => {
 			//Set the owner
 			signal.owner_id = req.user._id;
 			//Save new tags if there is any
-			if(signal.tags){
 
-				saveNewTagsFromSignal(signal.tags)
-				.then(savedTags => {
-
-					signal.tags = savedTags;
-					signal.save((err) => {
-						if (err) {
-							console.log(err);
-							re.status(500).end()
-						}
-						res.status(201).end();
-					})
-				},
-				(err) => {
-					console.error(err);
-					res.status(500).end()
+			saveNewTagsFromSignal(req.body.tags)
+			.then(savedTags => {
+				signal.tags = savedTags;
+				signal.save((err) => {
+					if (err) {
+						console.log(err);
+						re.status(500).end()
+					}
+					res.status(201).end();
 				})
-			}
+			},
+			(err) => {
+				console.error(err);
+				res.status(500).end()
+			})
+
 		},
 
 		/** GET /:id - Return a given entity */

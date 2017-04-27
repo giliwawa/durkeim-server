@@ -159,9 +159,20 @@ describe('api tests', ()=>{
     it('should add a signal', done => {
 
       const body = {
-        "title"       : "Looking for advice about butter spreading",
-        "body"        : "butter spreading is realy hard nowadays can someone give me the in and outs of this industry",
-        "owner_id"    : user_id
+        "tags":[
+          {
+            "_id":"-1",
+            "type":"location",
+            "value":"bay_area"
+          },
+          {
+            "_id":"-1",
+            "type":"market",
+            "value":"B2C"
+          }
+        ],
+        "body":"fi fommek",
+        "title":"zebbi"
       };
 
       chai.request(app)
