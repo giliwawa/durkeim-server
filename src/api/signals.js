@@ -1,5 +1,8 @@
 import resource from 'resource-router-middleware';
+import {saveNewTagsFromSignal} from '../lib/signal';
+import mongoose from 'mongoose';
 
+let Signal = mongoose.model('signals');
 
 export default ({ config, db }) => {
 	let router = resource({
@@ -25,19 +28,32 @@ export default ({ config, db }) => {
 		},
 
 		/** POST / - Create a new entity */
-		create({body}, res) {
-			let Signal = db.model('signals');
-			let signal = new Signal(body);
+		create(req, res) {
 
 			// TODO: Add validation
+			let signal = new Signal(req.body);
+			//Set the owner
+			signal.owner_id = req.user._id;
+			//Save new tags if there is any
+			if(signal.tags){
 
-			signal.save((err) => {
-				if (err) {
-					console.log(err);
-					re.status(500).end()
-				}
-				res.status(201).end();
-			})
+				saveNewTagsFromSignal(signal.tags)
+				.then(savedTags => {
+
+					signal.tags = savedTags;
+					signal.save((err) => {
+						if (err) {
+							console.log(err);
+							re.status(500).end()
+						}
+						res.status(201).end();
+					})
+				},
+				(err) => {
+					console.error(err);
+					res.status(500).end()
+				})
+			}
 		},
 
 		/** GET /:id - Return a given entity */

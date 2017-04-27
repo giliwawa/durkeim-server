@@ -32,6 +32,7 @@
   "author": "Jason Miller <jason@developit.ca>",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.3.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.3",
     "clearbit": "^1.2.3",

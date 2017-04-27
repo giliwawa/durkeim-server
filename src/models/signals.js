@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise
 
 const signalSchema = new Schema({
 
-  "Title"           : String,
+  "title"           : String,
   "body"            : String,
   "matched_users"   : [{type : Schema.ObjectId, ref: "users"}],
   "tags"            : [{type: Schema.ObjectId, ref: "tags"}],
@@ -22,6 +22,7 @@ const signalSchema = new Schema({
   }
 });
 // methods ======================
+
 
 const signals = mongoose.model('signals', signalSchema);
 export default signals;
