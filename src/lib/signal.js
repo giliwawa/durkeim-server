@@ -4,7 +4,7 @@ import map from 'async/map'
 
 const Tag = mongoose.model('tags');
 
-const saveNewTagsFromSignal = (tags) => {
+export function saveNewTagsFromSignal(tags){
   return new Promise((resolve, reject) => {
     map(tags,(tag,cb) => {
       if(tag._id == -1){
@@ -23,8 +23,4 @@ const saveNewTagsFromSignal = (tags) => {
       resolve(result)
     })
   })
-}
-
-export default {
-  saveNewTagsFromSignal
 }
