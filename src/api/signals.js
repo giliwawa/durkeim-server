@@ -1,5 +1,5 @@
 import resource from 'resource-router-middleware';
-import {saveNewTagsFromSignal} from '../lib/signal';
+import saveNewTagsFromSignal from '../lib/signal';
 import mongoose from 'mongoose';
 
 let Signal = mongoose.model('signals');
