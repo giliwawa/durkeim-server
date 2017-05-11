@@ -21,7 +21,7 @@ export default ({ config, db }) => {
 
 		/** GET / - List all entities */
 		index({ params }, res) {
-			let tags = db.model('tags').find({}).then((data) => res.json(data),(err) => console.error(err))
+			let tags = db.model('tags').find({}).then((data) => res.json(data),(err) => res.status(500).json({error : "Something went wrong."}))
 		},
 
 		/** POST / - Create a new entity */

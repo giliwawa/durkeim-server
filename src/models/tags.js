@@ -7,7 +7,12 @@ mongoose.Promise = global.Promise
 
 const tagSchema = new Schema({
 
-  "value" : String,
+  "value" : {
+    type : String,
+    index: true,
+    unique: true,
+    dropDups: true
+  },
   "type"  : String,
   "created_at": {
     type : Date,
